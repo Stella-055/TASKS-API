@@ -1,18 +1,21 @@
-import express from "express";
-import { PrismaClient } from "@prisma/client";
+import express from 'express';
+
+import { PrismaClient } from './prisma/generated/prisma/edge'
+
+
 
 const app = express();
 app.use(express.json());
 const prisma = new PrismaClient();
 app.get("/", (_req, res) => {
-  res.send(` <h1> Welcome to Tasks API</h1>`);
+  res.send(` <h1> Welcome to Tasks manager APi</h1>`);
 });
 
 app.post("/create", async (req, res) => {
   try {
-    const { title, description, IsCompleted } = req.body;
+    const { title, description, isCompleted } = req.body;
     const task = await prisma.task.create({
-      data: { title, description, IsCompleted },
+      data: { title, description, isCompleted },
     });
     res.status(200);
     res.send({
@@ -20,7 +23,7 @@ app.post("/create", async (req, res) => {
       data: {
         title,
         description,
-        IsCompleted,
+        isCompleted,
       },
     });
   } catch (error) {
@@ -32,7 +35,7 @@ app.get("/tasks", async (req, res) => {
   try {
     const tasks = await prisma.task.findMany({
       where: {
-        IsCompleted: false,
+        isCompleted: false,
       },
     });
     res.status(200);
@@ -62,7 +65,7 @@ app.patch("/tasks/:id", async (req, res) => {
 
     console.log(" Body:", req.body);
 
-    const { title, description, IsCompleted } = req.body;
+    const { title, description, isCompleted } = req.body;
 
     const updatedtask = await prisma.task.update({
       where: {
@@ -71,7 +74,7 @@ app.patch("/tasks/:id", async (req, res) => {
       data: {
         title,
         description,
-        IsCompleted,
+        isCompleted,
       },
     });
     res.json(updatedtask);
