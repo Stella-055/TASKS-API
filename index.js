@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { PrismaClient } from './prisma/generated/prisma/edge'
+import { PrismaClient } from "@prisma/client"
 
 
 
