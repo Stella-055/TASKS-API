@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 const prisma = new PrismaClient();
 app.get("/", (_req, res) => {
-  res.send(` <h1> Welcome to Tasks manager APi</h1>`);
+  res.send(` <h1> Welcome to Tasks manager API</h1>`);
 });
 
 app.post("/create", async (req, res) => {
@@ -60,10 +60,7 @@ app.get("/tasks/:id", async (req, res) => {
 app.patch("/tasks/:id", async (req, res) => {
   try {
     const { id } = req.params;
-
-    console.log(" Body:", req.body);
-
-    const { title, description, isCompleted } = req.body;
+const { title, description, isCompleted } = req.body;
 
     const updatedtask = await prisma.task.update({
       where: {
